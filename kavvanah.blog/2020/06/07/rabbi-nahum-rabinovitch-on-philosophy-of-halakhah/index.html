@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="en">
+<![endif]-->
+<!--[if (!IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+<meta charset="UTF-8" />
+<title>Rabbi Nahum Rabinovitch on Philosophy of Halakhah | The Book of Doctrines and Opinions:</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://kavvanah.blog/xmlrpc.php" />
+<meta name="google-site-verification" content="i1uGLQ-O5LCVC2Nq-7Dauv0K92aKJhTST3O2BqRN9O8" />
+<meta name="msvalidate.01" content="D927D4DCA9938C1F2F92C3D5D6AC8BDF" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9rYXZ2YW5haC5ibG9n"
+		+ "&wpcomid=9426707"
+		+ "&time=1591594531";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='https://s0.wp.com' />
+<link rel='dns-prefetch' href='https://kavvanah.wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="The Book of Doctrines and Opinions: &raquo; Feed" href="https://kavvanah.blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Book of Doctrines and Opinions: &raquo; Comments Feed" href="https://kavvanah.blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Book of Doctrines and Opinions: &raquo; Rabbi Nahum Rabinovitch on Philosophy of&nbsp;Halakhah Comments Feed" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJydktlOwzAQRX+IiZtUoPCA+BbbmZppvcmLQv4eJw20lGAqXiJf+55Zw0YP0tmENjGTweusyEY2eukMREMapxvVyBgf2DYWUPOEA3gX042qYZpOGNkRk+fyBIv6Yf/0qlykwKDKS0DWN13TMpFJD0xot+Ai8DCxmCaNd4RZqKvsfHI5gQo0/DdE4Imsin/g0q1Y23T7ZscGiunrErbZq5nN3Zd743maHQYH4qjRFFsNG2lQWHZTLOsZEr7XkWX7QviAMUL5GsoG0lvJdc+aKvNdnw7BbRR9TsB8FnOvXJPFXya65SQrz25Yyq/1p9BBKaQszdlvAg6aU6j/76UFVY5qGehF1iAu5+CCh8tptr+al/bxeffU913XHT8AtX9a0w==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://kavvanah.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Interview with Tzvi Langermann about Ibn&nbsp;Kammuna' href='https://kavvanah.blog/2020/05/11/interview-with-tzvi-langermann-about-ibn-kammuna/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="index.html" />
+<link rel='shortlink' href='https://wp.me/pDyjF-2SY' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fkavvanah.blog%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fkavvanah.blog%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Rabbi Nahum Rabinovitch on Philosophy of Halakhah" />
+<meta property="og:url" content="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/" />
+<meta property="og:description" content="Last month, Rabbi Nahum Eliezer Rabinovitch, the dean of Yeshivat Birkat Moshe in Maale Adumim, passed away at the age of 92 years old. As a tribute to him at the end of thirty days of mourning, I …" />
+<meta property="article:published_time" content="2020-06-07T15:42:04+00:00" />
+<meta property="article:modified_time" content="2020-06-07T15:56:03+00:00" />
+<meta property="og:site_name" content="The Book of Doctrines and Opinions:" />
+<meta property="og:image" content="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg" />
+<meta property="og:image:width" content="500" />
+<meta property="og:image:height" content="281" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@kavvanah" />
+<meta name="twitter:text:title" content="Rabbi Nahum Rabinovitch on Philosophy of&nbsp;Halakhah" />
+<meta name="twitter:image" content="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/c9f111237f93750b6b994fc5185d49c3?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/c9f111237f93750b6b994fc5185d49c3?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/c9f111237f93750b6b994fc5185d49c3?s=114" />
+<link rel='openid.server' href='https://kavvanah.blog/?openidserver=1' />
+<link rel='openid.delegate' href='https://kavvanah.blog/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://kavvanah.blog/osd.xml" title="The Book of Doctrines and Opinions:" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'coraline', amp: false, siteid: 8982, blogid: 9426707, consent: __ATA_CC(), flag: 3 };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="The Book of Doctrines and Opinions:" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="notes on Jewish theology and spirituality" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://kavvanah.blog/feed/;icon-uri=https://secure.gravatar.com/blavatar/c9f111237f93750b6b994fc5185d49c3?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Last month, Rabbi Nahum Eliezer Rabinovitch, the dean of Yeshivat Birkat Moshe in Maale Adumim, passed away at the age of 92 years old. As a tribute to him at the end of thirty days of mourning, I will devote a post to his philosophical writings about Jewish law. He had a unique Maimonidean intellectual&hellip;" />
+<link rel="amphtml" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/amp/"></head>
+
+<body class="post-template-default single single-post postid-11096 single-format-standard customizer-styles-applied two-column content-sidebar highlander-enabled highlander-light">
+<div id="container" class="hfeed contain">
+	<div id="header">
+		<div id="masthead" role="banner">
+						<div id="site-title">
+				<span>
+					<a href="https://kavvanah.blog/" title="The Book of Doctrines and Opinions:" rel="home">The Book of Doctrines and Opinions:</a>
+				</span>
+			</div>
+			<div id="site-description">notes on Jewish theology and spirituality</div>
+		</div><!-- #masthead -->
+
+		<div id="access" role="navigation">
+		  			<div class="skip-link screen-reader-text"><a href="index.html#content" title="Skip to content">Skip to content</a></div>
+						<div class="menu"><ul>
+<li ><a href="https://kavvanah.blog/">Home</a></li><li class="page_item page-item-2"><a href="https://kavvanah.blog/about/">About</a></li>
+<li class="page_item page-item-6986"><a href="https://kavvanah.blog/lectures-and-videos/">Lectures and Videos</a></li>
+<li class="page_item page-item-613"><a href="https://kavvanah.blog/rules-for-comments/">Rules for Comments</a></li>
+</ul></div>
+		</div><!-- #access -->
+
+		<div id="branding">
+						<a href="https://kavvanah.blog/">
+									<img src="https://kavvanah.files.wordpress.com/2015/04/cropped-web-header-1140x333-2.jpg" width="990" height="204" alt="" />
+							</a>
+					</div><!-- #branding -->
+	</div><!-- #header -->
+
+	<div id="content-box">
+
+<div id="content-container">
+	<div id="content" role="main">
+
+	
+		<div id="nav-above" class="navigation">
+			<div class="nav-previous"><a href="https://kavvanah.blog/2020/05/11/interview-with-tzvi-langermann-about-ibn-kammuna/" rel="prev"><span class="meta-nav">&larr;</span> Interview with Tzvi Langermann about Ibn&nbsp;Kammuna</a></div>
+			<div class="nav-next"></div>
+		</div><!-- #nav-above -->
+
+		<div id="post-11096" class="post-11096 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+
+			
+			<h1 class="entry-title">Rabbi Nahum Rabinovitch on Philosophy of&nbsp;Halakhah</h1>
+							<div class="entry-meta">
+					<span class="meta-prep meta-prep-author">Posted on</span> <a href="index.html" title="10:42 am" rel="bookmark"><span class="entry-date">June 7, 2020</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://kavvanah.blog/author/kavvanah/" title="View all posts by Alan Brill" rel="author">Alan Brill</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="index.html#respond">Leave a comment</a></span>
+									</div><!-- .entry-meta -->
+			
+			<div class="entry-content">
+				<p>Last month, <a href="https://www.timesofisrael.com/prominent-religious-zionist-rabbi-nachum-rabinovitch-dies-at-92/" target="_blank" rel="noreferrer noopener">Rabbi Nahum Eliezer Rabinovitch, the dean of Yeshivat Birkat Moshe in Maale Adumim, </a>passed away at the age of 92 years old. As a tribute to him at the end of thirty days of mourning, I will devote a post to his philosophical writings about Jewish law. He had a unique Maimonidean intellectual perspective of rationality, autonomy, historic situation, and applying the law to achieve its uplifting purpose. We will look at three of his essays, two of which were written in Hebrew as part of his 1991 book The Way of Torah (<em>Darkhei Hatorah</em>) and one in English.(You may want to download the three essays before we start- <a href="http://www.edah.org/backend/JournalArticle/Rabinovitch3_1.pdf">Way of Torah,</a> <a href="http://www.hakirah.org/Vol%205%20Rabinovitch.pdf">EmunatHakhamim, </a><a title="Rambam Science Taamei Mitzvot" href="https://kavvanah.files.wordpress.com/2020/06/rambam-science-taamei-mitzvot.pdf">Rambam Science Taamei Mitzvot</a>)  We will conclude with some quotes from his recent Hebrew lectures to students. (I am always happy for lists of typos)</p>
+
+<p>Most of Rabbi Rabinovitch&#8217;s thought has been edited into a single Hebrew volume <a href="http://s.ybm.org.il/hebrew/Product.aspx?Product=140&amp;Category=28">Mesilot bi-Levavam- </a>this is the volume to buy.</p>
+
+<figure class="wp-block-image size-large"><img data-attachment-id="11097" data-permalink="https://kavvanah.blog/rabinovitch/" data-orig-file="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg" data-orig-size="640,360" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="rabinovitch" data-image-description="" data-medium-file="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=300" data-large-file="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=500" class="wp-image-11097" src="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=640" alt="" srcset="https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg 640w, https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=150 150w, https://kavvanah.files.wordpress.com/2020/06/rabinovitch.jpg?w=300 300w" sizes="(max-width: 640px) 100vw, 640px" /></figure>
+
+<p>But first, a little background the life of Rabbi Nahum L. Rabinovitch, a giant of a rabbinic figure. Born in Montreal, Canada in 1928, He studied under the Pinchas Hirschprung, who ordained him at the age of 20, afterwards he studied at the Ner Yisroel yeshiva in Baltimore, Maryland. He served as a congregational rabbi, first in South Carolina and later in Toronto, where he dealt with the nuts and bolts of basic congregational life even teaching primary grades in the day school he founded. While in Toronto, he completed a doctorate in the history of science at the University of Toronto specializing in Rabbinic probability and statistics as well as the mathematics of the medieval Jewish thinkers Gersonides and Crescas. In 1971, he accepted the spectacular offer to become principal of Jews’ College in London. He could have been the head of any institution in the North American or the UK. In 1983 Rabbi Rabinovitch immigrated to Israel  to accept an offer to become dean of the hesder yeshiva, Yeshivat Birkat Moshe, in Maaleh Adumim. For those who read Hebrew, there is a FB page collection of tributes from his students, including many entries from Rabbi Yoni Rosenzweig, an interesting one from Dror Bondy, and many others-<a href="https://www.facebook.com/%D7%9C%D7%96%D7%9B%D7%A8-%D7%94%D7%A8%D7%91-%D7%A0%D7%97%D7%95%D7%9D-%D7%90%D7%9C%D7%99%D7%A2%D7%96%D7%A8-%D7%A8%D7%91%D7%99%D7%A0%D7%95%D7%91%D7%99%D7%A5-%D7%96%D7%A6%D7%9C-107069444333961/">here </a></p>
+
+<p>The best tribute to Rabinovitch was penned two years ago by Prof. Allan Nadler as <a href="https://jewishreviewofbooks.com/articles/3235/maimonides-in-maale-adumim/">“Maimonides in Ma’ale Adumim.”</a> Nadler points out the Maimonidean nature of Rabinovtch’s thought in its emphasis on rationality, purpose, and close readings. Specifically, that “Maimonides must be interpreted through Maimonides” and not through the later commentaries encrusting Maimonides’ shine.  Nadler describes how Rabinovitch’s public reputation for some is as a liberal universalism and for others as hardline ultrarightist.</p>
+
+<p>As a universalist liberal has praise for “both Christianity and Islam as movements that spread the originally Judaic principles of monotheism, morality, and even messianic hope to the entire world. He has praised the Catholic Church’s Second Vatican Council, even citing the text of <em>Nostra Aetate </em>as correcting what he regards as the historical perversions of Paul’s true attitude toward the Jews, which was in the end one of love.” Rabinovitch has a principled break with Israel’s Chief Rabbinate on their intolerant approach to conversion. <a href="https://jewishreviewofbooks.com/articles/3235/maimonides-in-maale-adumim/">Nadler</a> wrote: “Rabinovitch’s works as a practicing halakhist have always aimed to make traditional life as livable as possible for his fellow Jews.” </p>
+
+<p>On the other hand, “after the assassination of Prime Minister Rabin in 1995,&#8221; a false report &#8220;was widely reported that Rabinovitch was among those who had applied the “laws of the <em>rodef</em>” (a lethal pursuer whom one is permitted to kill in self-defense) to Rabin.&#8221; Nadler thinks the report is entirely erroneous, but the damage was done and public opinion is less kind. (For more on his views of politics and religion- <a href="http://www.ybm.org.il/lesson?lesson=2941&amp;format=H">see here</a>)</p>
+
+<p>Rabinovitch is known for completely removing Christianity from the category of foreign worship. He also gave permission for Jews to contribute to the rebuilding of the Tabgha Church of the Loaves and Fish after an arson attack by Jewish extremists. He allows using electronic keys in hotels and considers allowing electricity, even turning it off, on Yom Tov. He allows disappearing skin lotions on Shabbat. He allows inviting guests who will drive for shabbat meals. He thinks non-Jews in Israel should have full equality and equal rights the way are treated in the USA. They should have been fully integrated into the culture.</p>
+
+<p>Most notably, and in contrast to many other Orthodox rabbis, Rabinovitch is in favor of women learning the same rabbinic curriculum as men, he supported women rabbis and in leadership roles, and affirmed their capability to decide Jewish law on any topic a man can decide.</p>
+
+<p>Rabbi Rabinovitch developed a historical reading of Maimonides combining rationality with autonomy and historical development. He believed the Bible had a clear telos for both the individual and the community that we can know if we study the Bible correctly. The study of the Talmud and halakhah has to be done with this Biblical vision clearly in from of one’s understanding in order to derive the divine purpose.  In a Maimonidean way, he saw Talmud as conceptualization and mitzvot as having an intellectual-ethical purpose. Rabinovitch rejects the Brisker conceptual approach as swerving  from the direct meaning and intentions of Maimonides. Halakhah is less formalistic and more about purpose than other rabbinic figures. He could be compared to other Maimonides halakhic approaches such as those of Rabbi Yosef Kapach, Rabbi Yosef Rozin (Rogochover), Rabbi Prof Isadore Twersky, and various approach of the older generation of Kibbutz Hadati.</p>
+
+<ol type="I"><li><h2><strong><a href="http://www.edah.org/backend/JournalArticle/Rabinovitch3_1.pdf">The Way of Torah</a></strong></h2></li></ol>
+
+<p>In the 1970’s, there was a conference volume <em>Modern Jewish Ethics</em> that published Rabbi Aharon Lichtenstein’s famous essay about how the rabbinic scholar has to incorporate ethical values in decision making and Prof Akiva Simon’s essay of a universal Jewish ethic of love they neighbor. Yet, it also contained an intriguing early adumbration of Rabbi Rabinovitch’s ethical thought “Halakhah and Other Systems of Ethics” where he presented his ethical system. In it, the Bible has an ethical aspiration to improve humanity, however each age has to rethink the implementation of the ethical goal afresh. He claims an ethical evolution as part of God’s plan whereby it is incumbent upon us to understand Torah anew in every age of history. Rabinovitch   demonstrated that there is  no   halakhic  or  spiritual  reason  to  deny  a  higher  ethical realization in the historical unfolding of the halakhic process.</p>
+
+<p>Rabinovitch develops his ideas fully a decade later in a Hebrew essay (1988) and then a short book  (1999) by the title of &#8220;Darkhah Shel Torah,&#8221; Me&#8217;aliyot: Jerusalem, 1999), and reworked in his 2015 book. Fortunately, several pieces of the book have been translated. The entire volume deserves to be translated along with his other conceptual essays. As you read it, think how it compares to other halakhic methods. (If anyone wants to write a conceptual analysis, let me know.)</p>
+
+<p>The essay translated as “<a href="http://www.edah.org/backend/JournalArticle/Rabinovitch3_1.pdf">The Way of Torah” </a>begins by defining the image of God (<em>Tselem Elohim</em>) in each person as free choice to choose good without any coercion. Intellectually informed choice is the goal of the Torah. Just as knowledge accumulates in science, so too it accumulates in Torah. And just as science is a universal, making the entire world better, so too the Torah</p>
+
+<p><em>Each generation acquires knowledge  and  power  from  the  efforts  of  its  ancestors, and, like a dwarf perched on the shoulders of a giant, its vision  can  penetrate  a  bit  farther  into  the  distance. Sometimes,  a  generation  will  advance  beyond  its  predecessors and thereby become equipped to teach its descendants  to  advance  even  further</em></p><p><em>
+
+</em></p><p><em>The nation of Israel, which has already succeeded in producing such choice individuals, serves as a vehicle for this process, whose goal is to establish a society in which the kingdom of heaven will be realized on earth</em></p>
+
+<p><strong>Section Two- Progress</strong></p>
+
+<p>From that beginning, Rabinovitch makes the leap that there is an evolution of moral values in history, i.e. from polygyny to monogamy, from slavery to human rights of the individual, from war to peace, and from coercion to liberty.</p>
+
+<p>There were original Torah ideals which were always applied based on the standards of a given era. Many of the Torah laws as expressed in the Bible or Talmud were only an accommodation for that time because that was the best they could achieve. Some Torah laws are given in accordance with minimal standards of the era, some for study alone to teach Torah values, and some for realization of moral and spiritual ideals.</p>
+
+<p>Punishments and the system of legal coercion function heuristically to fashion social improvement without having any practical application today. However ideally the Torah should not be kept because of coercion and punishments are only allowed on an ad hoc basis when there is demonstrable communal benefit along with the consent of the entire community.</p>
+
+<p><em>In  the  time  of  the rishonim (rabbinic authorities  of  the  mid-eleventh  through  mid-fifteenth centuries),  R.  Gershom,  Beacon  of  the  Diaspora,  saw that his generation was ready for a ban on divorce with-out  the  wife&#8217;s  consent and  for  eliminating  polygyny,  at least  within  the  communities  of  Western  Europe.By now,  his  enactments  have  spread  through  all  Israel.</em></p><p><em>
+
+</em></p><p><em>Thus, from Creation itself the Torah teaches us that all men are truly equal. Maimonides read  it  as  follows:  &#8220;&#8216;The  mold  of  primeval  Adam&#8217;  –  the form  of  the  human  species,  within  which  lies  man&#8217;s humanity and in which all human beings share.&#8221; However,  humanity  went  astray.  Men  subjugated  one another  and  distinguished  between  slaves  and  masters. These  distinctions  of  status  lack  substance  and  are  not grounded  in  reality,  for  the  Creator  regards  them  all  as equal.</em></p>
+
+<p><em>Despite  these  limitations,  the  institution  of  slavery remained, for the prevailing conditions precluded its abolition The Sages directed so much attention to remedial legislation related to slaves, and the doctrine of equality so penetrated  the  national  consciousness,  that  these  attitudes eventually became characteristic of Judaism and oppressive  regimes  attempted  to  uproot  them.</em></p>
+
+<p>The Torah’s intent was originally against slavery as shown in the emphasis on how we all have the image of God. But already in the Torah, there were concession to allow it. The Rabbinic sages saw the original intent and restricted the application of slavery. In modern times, scientific and technological discoveries made slavery irrelevant. [AB Editor’s note- except we have more slaves globally than ever and even more prison slaves in the US than the 19<sup>th</sup> century.]</p>
+
+<p><em>Was  this  &#8220;Jewish  religious  precept&#8221;  an  innovation?  Of course  it  was;  but  it  was  born  of  and  nourished  by  the Torah, and its origins are rooted in Scripture, though the world at the time of the Bible was not yet fit for it. Over the course of time, knowledge increased throughout the world,  new  scientific  and  technological  discoveries  produced sources of energy far mightier than human labor and  opportunities  for  leisure  grew.  Divine providence then  led  to  the  abolition  of  slavery  nearly  everywhere.</em></p><p><em>
+
+</em></p><p><em>The abolition of slavery is simply a partial realization of the  exalted  ideal  taught  by  the  Torah;  and  the  history  of the West makes it clear beyond all doubt that one of the decisive  factors  in  that  process  was  the  widespread knowledge  of  the  Torah.</em></p>
+
+<p>His third example is the concession of armies despite the value of peace. [AB- editor’s note -In the 21<sup>st</sup> century, the post WWII sense that warfare was on its way out does not have the same force anymore.]</p>
+
+<p><em>The  final  example  bears  on  international  relations.  &#8220;R. Joshua  said: Great  is  peace,  for  the  name  of  the  Holy One blessed be He is called peace, as Scripture says, &#8216;And he called it &#8220;the Lord is peace.’</em></p><p><em>
+
+</em></p><p><em>A nation not prepared  to  defend  itself  and  its  land  will  be  unable  to maintain  itself  and  will  quickly  pass  from  the  world…All the commandments related to war were given in order to restrict the scope of warfare and to replace an attitude that  glorifies  war  and  its  heroes  with  one  that  longs  for peace</em></p>
+
+<p><strong>Section Three – The importance of study of seemingly obsolete topics to understand the Torah’s value system of building a kingdom of heaven on earth.</strong></p>
+
+<p><em>The Torah&#8217;s 613 commandments fall into two categories. Some commandments  are  destined  to  endure,  in  their present forms, at the end of days; and as a person rises higher  in  character  and  intellect,  he  becomes  aware  of broader opportunities for fulfilling those commandments and  understanding  their  meanings.  But  there  are  other commandments  that  are  primarily  a  mechanism  for  bettering society and moving it toward the formation of circumstances that  permit  carrying  out  the  purposes  for which  man  was  created  –  the  Kingdom  of  Heaven on earth. These commandments apply only in certain situations, and our aim is to move beyond them, to a state in which we will no longer be bound to fulfill them</em></p><p><em>
+
+</em></p><p><em>These commandments are presented in detail in the written  Torah,  and  the  oral  Torah  supplements  them  with  a multitude of additional rules and laws. Nevertheless, we have  learned  three  surprising  baraitot:&#8221;The  stubborn and  rebellious  son  never  existed  and  never  will  exist&#8221;;&#8221; The wayward city never existed and never will exist&#8221;; and&#8221; The  afflicted  house  never  existed  and  never  will  exist.&#8221;</em></p>
+
+<p><em>Schoolchildren who are aware of the laws of the  stubborn  and  rebellious  son  will  never  become  one. A  community  whose  adults  study  the  laws  of  the  way-ward city can be assured that it will never give rise to the &#8220;root  bearing  gall  and  wormwood&#8221;  of  idolatry.  And  one who has learned to recognize the hand of God in natural phenomena  and  natural  disasters  will  no  longer  need afflicted  buildings  to  inspire  in  him  thoughts  of  repentance. Similarly for all the commandments whose object has  already  been  achieved  in  the  betterment  of  life  in practice; they retain their heuristic force. Even if human-ity has progressed and risen above the minimal level that certain commandments were given to ensure, continued study of the laws associated with those commandments can refresh the intellect and direct it to even higher levels, while preserving its existing accomplishments.</em></p>
+
+<p><em>Over the course of generations, students of Torah develop  modes  of  critical  thinking  that  can  slice  through issues,  distinguishing  illusion  from  reality,  imaginings from  truth,  vain  puffery  from  glorious  responses  to God&#8217;s voice.</em></p>
+
+<p><strong>Coercion and Punishment: Means or Ends?</strong></p>
+
+<p>Lastly, the essay argues that legitimate governmental authority is based on consent of the community with no jurisdiction over religious matters. The government is therefore barred by halakhah from legislating and religious coercion.  In general, one should seek compromise and not the strict law, except as needed to prevent criminality. In this section the Torah is explained as requiring today a John Locke, US legal theory approach of governance by consent in contrast to the Torah’s seeming acceptance of the divine right of kings.</p>
+
+<p><em>One should seek compromise even if it circumvents the given law because the Torah’s ways are peace. “Does  compromise  circumvent  the  entire  array  of  laws pointing toward a given determination? It certainly does; but  all  the  ways  of  the  Torah  are  peace.” </em></p><p>In this, Rabbi Rabinovitch follows one side of a Talmudic debate that he thinks is an “elevation of the judicial process to a higher level.”</p>
+
+<p><em>It  thus  turns  out  that  the  source  of  the  leadership&#8217;s authority  lies  in  both  the  Torah  and  the  community.  The consent of the community must be expressly granted to specific individuals recognized as authoritative. It is clear that  if  the  community  votes  unanimously,  or  even  by majority,  to  confirm  specific  procedures  through  which compulsory measures may be adopted, the usefulness of those measures will be apparent to all. And in that case, the Torah as well will confirm them. There  is  an  ongoing  tension  between  aspiring  to  the Torah&#8217;s social ideal of undisturbed peace and recognizing reality, with its very real need to do battle against the dangerous  manifestations  of  a  few  undisciplined  evildoers. Even if the majority of a nation is suffused with a love of truth and peace,  it  cannot  give  up  the  power  to  block criminal tendencies at its margins… The  key  to  resolving  this  tension  is  to  make the  will  of  the  people  an  anchor  of  the  government&#8217;s authority to compel. Those whom &#8220;the masses have recognized as authoritative&#8221; enjoy authority, and that authority does not detract from the principles to which we aspire.</em></p>
+
+<p><em>[T]he  king&#8217;s  juridical authority  is  confined  to  interpersonal  (i.e.,  non-ritual)matters,  where  he  can  act  to  remedy  society  through righteousness and judgment. But this authority is rooted as much in the consent of the nation as in the king having  been  chosen  by  God&#8217;s  prophet… One  of  the  rishonim summed  it  up  nicely &#8220;Whatever honor the masses are willing to give him, thatis  the  sovereignty  he  will  have,  to  the  point  that  if  they wish to take away all honor from him, all sovereignty will be taken away from him.</em></p>
+
+<p><strong>Two forms of authority: Torah and Govt authority</strong></p>
+
+<p>In Judaism according to Rabbi Rabinovitch, there is a separation of secular and religious authority. Even the authority of the Rabbis is only granted by the consensus of the laity. Even in Israel, the government is only by the will of the people. Major issues should have a referendum [AB- For Rabbi Rabinovitch, democracy is only consensus of the people. The rest of democratic structure such as a bill of rights, guaranteed freedoms and representational government are not discussed.] His thought should be compared to that of Rabbi Hayyim Hirschenson and other</p>
+
+<p><em>As  a  practical  matter,  most  large  communities  through most  of  history  have  had  two  types  of  leadership.  The community appointed a rabbi and judges who were greatly  learned  in  Torah,  excelling  in  &#8220;the  quality  of  Torah scholarship&#8221; to the extent now possible. In addition, they appointed  a  community  leader  and  council  –  the  select-men  of  the  town  –  to  manage  the  various  matters  that required  attention.  Even  the  appointment  of  the  rabbi and other religious functionaries was up to them, subject to the approval of the community.</em></p><p><em>
+
+</em></p><p><em>The  Knesset  should  deal  solely  with  matters related  to  the  improvement  of  society,  the  arrangement of  relationships  among  citizens,  and  matters  of  security and foreign affairs…The power to compel by force is essential  to  the  existence  of  a  sound  social  order,  but  that power  is  given  to  the  government  only  in  accordance with the will of the people, and it should be used as little as possible. If there is a need for far-reaching changes in the tax  laws,  in  the  military  draft,  or  in  other  matters involving  compulsion,  the  desirability  of  submitting  the matter to referendum should be weighed, and the principle of majority rule is widely recognized</em></p>
+
+<p><em>The  Torah  authority  should  never  use  compulsion,  except  with  the  consent  of  the  community  that accepted  it  as  authoritative  and  granted  it  that  power. Even then, compulsion should be used only in instances where harm may be inflicted on others, such as in family law matters related to divorce, support, and the like. It is desirable that the Torah authority never employ force</em></p>
+
+<p><strong>Value of liberty</strong></p>
+
+<p>The punchline to this essay is that our age of individualism and personal liberty is better for the development of the Torah’s spiritual goals than prior age despite having less religious observance.</p>
+
+<p><em>Our age  is  characterized  by  the  widespread  view  that individual liberty is a value greater than any other human need.  There  is  much  that  is  good  about  that  phenomenon,  for  only  one  who  values  free  choice  can  come  to recognize  how  that  choice  should  be  used  to  advance lofty  spiritual  goals.  And  even  though  our  generation compares poorly to its predecessors with respect to faith and religious observance, its deepening sense of individual liberty represents definite progress over past achievements. Until modern times, there prevailed an authoritarian  worldview,  which  regarded  discipline  as  the  highest value.  Today, liberty  enjoys  the  highest  priority.  Only a person conscious of his power to choose can act entirely out of free will.</em></p>
+
+<p><em>God&#8217;s  kindnesses  overpower  us.  We  now  can  illuminate Him  as  He  illuminated  us.  The  nation  returning  to  its land  has  the  capacity  to  renew  the  eternal  covenant through  its  own  free  will,  and  now  only  the  personal example  of  faithful  adherents  of  the  Torah  can  exert influence and cause the Torah to be spread throughout all segments of the nation.</em></p>
+
+<h3>Text #2 <strong>The Talmudic Term<a href="http://www.hakirah.org/Vol%205%20Rabinovitch.pdf"> Emunat Ḥakhamim</a></strong></h3>
+
+<p>A different section of the book on Emunat Hakhamim <a href="http://www.hakirah.org/Vol%205%20Rabinovitch.pdf">was translated in a different journal</a>. Here the concern was the meaning of the Rabbinic idea of having to have faith in the sages.  The style of the translation differences greatly than the first piece. I left each essay in the translator’s style.</p>
+
+<p>For Rabbi Rabinovitch, belief in the Rabbinic Sages means that their texts have deep significance and that it is incumbent upon us to comprehend the deep meanings of those texts. It does not mean giving contemporary rabbis authority or seeing them as having special powers of understanding. We keep the functions of the Biblical prophet who hears a direct divine voice separate than the Sage who authority is based on knowledge.</p>
+
+<p><em>Emunat  ḥakhamin  thus  has  two  parallel  planes.  On  the  one  hand   is   the   faith   that   the   words   of   our   Sages   contain   deep   significance and truths that are worth seeking out. On the other hand is  faith  and  self-confidence  that  with  one’s  G-d-given  mind  it  is  possible  to  comprehend  the  wisdom  hidden  in  the  words  of  the  Sages.</em></p><p><em>
+
+</em></p><p><em>Rambam  carefully  and  clearly  explains  the  difference  between  a  ḥakham  and  a  prophet.  The  authority  of  an  established  prophet  derives  from  the  commandment “To him shall you listen” (Devarim 18:15). We are not to  ask  him  for  reasons  or  explanations.  The  main  purpose  of  a  prophet  is  to  guide  those  to  whom  he  was  sent,  in non-halakhic  matters.</em></p><p><em>
+
+</em></p><p><em> The   authority   of   a   Sage   is   different.   Although   we   are   commanded  to  honor  and  fear  him,  it  is  only  because  of  his  Torah  knowledge, which can be evaluated with straightforward logic. Unlike a prophet, a ḥakham is obligated to provide a reason for what he says.</em></p>
+
+<p>Citing Nahmanides, he reiterates that Torah is subject to debate unlike mathematics. In the end, we have to follow truth not authority. Even ordinary students of the Torah have an obligation to seek the truth and not rely on codes or authority.</p>
+
+<p><em>Since   the   wisdom   of   Torah   is   unlike   the   study   of   mathematics, there is room for opposing opinions. One ḥakham sees one  aspect  prevailing,  while  a  second  sees  the  opposite.  It  is  clear,  however,   that   both   sides   justify   their   position   on   recognized   principles and criteria. To this person, a particular component carries more  weight,  while  to  the  other,  it  carries  less.  Therefore,  even  one  who disagrees with a certain ḥakham still has emunat ḥakhamim that the words  of  this  ḥakham  are  not  meaningless,</em></p><p><em>
+
+</em></p><p><em>If at the  end  of  this  process  it  is  necessary  to  choose  between  differing  opinions, emunat  ḥakhamim  places  upon  the  decider  the  weighty  obligation to act according to truth—to the degree that he is capable of perceiving it.</em></p>
+
+<p><strong>The Responsibility of the Individual</strong></p><p>Rabbi Rabnovitch opens up the search for the meaning of the text to anyone with sufficient background and to go back to the original sources rather than rely on codes or formalism </p>
+
+<p><em>This  obligation  to  work  at  achieving  and  clarifying  the  truth  is  not  limited  to  those  who  are  on  the  level  of  deciding  halakhah.  The  Torah  was  given  to  all  Jews,  each  of  whom  is  obligated  to  learn  the  Torah sufficiently to be capable of arranging all his actions according to halakhah</em></p><p><em>
+
+</em></p><p><em>For  this  reason  many  [poskim]  prohibit  issuing  halakhic  rulings  out  of  books  which  summarize  the  laws  without  providing  reasons  or  background.  It  is  therefore  not  permitted  to  postpone  studying  the  reasoning  behind  the halakhot&#8230;.”</em></p>
+
+<p>Finally, a notable characteristic of Rabbi Rabinovitch cited by many of his students is that he encourages he students to understand the reasoning of a decision and more importantly to ask themselves how they would have answered.</p>
+
+<p><em>Yet,  even  when  one  asks  a  rav  to  rule  for  him  and  the  rav renders  a  psak,  he  is  not  relieved  of  his  responsibility  to  understand  the  reasoning  behind  the  psak.</em></p><p><em>
+
+</em></p><p><em>Thus, one who consults even an outstanding rav is considered negligent  if  he  does  not  attempt  to  clarify  and  confirm  that  the  psakhe  received  is  indeed  correct.  This  is  how  great  is  each  individual’s  responsibility  for  his  actions;  this  is  how  effectively  he  must  clarify  the  correct  ruling,  as  well  as  what  Hashem  expects  of  him  in  each  situation</em></p>
+
+<p><em>True emunat ḥakhamim obligates one to delve deeply to find the reasoning behind the ḥakhamim’s words while at the same time requiring the student or inquirer to be critical and to investigate rigorously,  in  order  to  verify  that  there  is  no  room  for  dissent.  </em></p>
+
+<p>He rejects the Ultra-Orthodox use of the term to ascribe prophetic status to rabbis.</p>
+
+<p><em>Recently,  some  have  begun  applying  the  term  “emunat  ḥakhamim”  to  something  else  entirely,  something  that  Ḥazal  never  discussed—that  ḥakhamim  also  have  prophetic  authority  in  divrei  reshut. There  are  those  who  label  such  childish  behavior as “emunat ḥachamim” while in reality it is a distortion of this great  attribute.  Instead  of  acquiring  true  Torah,  those  who  cling  to  this  distorted  “emunat  ḥakhamim”  distance  themselves  from  the  light  of  the  Torah  and  are  ultimately  incapable  of  distinguishing  between  right and wrong.</em></p>
+
+<h3>Text #3 RAMBAM, SCIENCE, AND <em>TAAMEI HAMITZVOT</em></h3>
+
+<p>Here is one of his articles from 1997 called <a title="Rambam Science Taamei Mitzvot" href="https://kavvanah.files.wordpress.com/2020/06/rambam-science-taamei-mitzvot.pdf">Rambam Science Taamei Mitzvot</a> a topic he wrote often about in the 1970&#8217;s. In this one, he emphasizes the importance of freedom of inquiry and the compatibility of Torah and science but then connects it to the very project of Torah. He also cites approvingly T H. Huxley’s idea of seeking perfect intellectual freedom guided by reason. Rabinovitch affirms evolution, the artificial creation of life in a laboratory and that one can accept the scientific negation of human uniqueness. These are not against Torah because what matters is scientific proof.</p>
+
+<p>Others Rabbinic scholars has given the same esteem to science but in the second part of the essay he compares scientific method to Torah. For the most part, both science and Torah are about observation and seeking the reasons of the rational system. He shows how Maimonides used the scientific thought of his era to understand Torah, meaning that they have similar structures. Unlike Rabbi Soloveitchik’s characterization of science as forming conceptual schemes, Rabbi Rabinovitch see observation, cause &amp; effect, and functional application.</p>
+
+<p><em>The first principle of science assumes that there are natural effects which can be observed. So too there are observable consequences of obedience to the Torah. Naturally, there are some laws with effects that can be foreseen, and even human legislators could design such rules in order to achieve desired ends.</em></p><p><em>
+
+</em></p><p><em>Many of the commandments can be broadly described as concerned with ethical character-traits, On this issue, most of the commentators have made the most of the fact that Rambam adopted the Aristotelian ideal of the mean in its entirety. Both in his. early discussion, in· the Commentary &#8216;to the Mishnah, and in the later development; in the  Mishneh Torah, in many passages the very language used is reminiscent  of the Nicomachean Ethics. After a· discussion of what constitutes utility or useful ends withreference to human behavior, Rambarn cites extensively from a treatise by Galen,  On  the Utilities of the Parts of the Body. Then he proceeds to point out an analogy with respect to human psychology. There is a parallel between the psychological and physical functions of the human being both in structure and development. (</em>195)</p>
+
+<p>From this parallel of science and Torah, Rabinovitch asks about applying contemporary psychology to understand Torah and helping it lead to our betterment. There are always new vistas.</p>
+
+<p><em>Can psychology today cast more light on this basic issue? What can modern theories of the subconscious add to our understanding of the function of ritual in maintaining and restoring mental health? Can the observance of [mitzvot],to help to generate spiritual and mental energy to sustain the individual and society</em></p><p><em>
+
+</em></p><p><em>These and similar questions arise naturally out of the Rambam&#8217;s discussion… In astronomy, for example, the search for new data must continue unabated as new vistas constantly open up for investigation. So too &#8220;The judgments of the Lord are true, they are righteous altogether&#8221; (Psalms 19:10). Yet much of that truth and righteousness are hidden from us, &#8220;and we do not know the manner</em></p>
+
+<h3><strong>Quotes from Lectures</strong></h3>
+
+<p>A distinctive trait of Rabbi Nahum Rabinovitch was that he would ask his students of “What do you think?”  He wanted to instill in his students the lesson that it is not enough to be given an answer or know the answer.  Rather, one must master the ability to think for yourself. He stressed independence rather than submission.  This in turn lead to many of his students, even relatively young, writing their own responsa to answer contemporary questions based on their own understanding the logic of the text. The approach is to test a hypothesis through experimentation as in science, a realist approach. Here are some quotes from classes on his approach to Torah study (freehand translation). Sources &#8211;<a href="http://www.ybm.org.il/lesson?lesson=9112&amp;format=H">Here</a> and<a href="http://ybm.org.il/lesson?lesson=8584&amp;format=H">Here</a> You can compare this approach to that of Rabbi Lichtenstein and others.</p><p><em>We have to think about how we arrive to truth. A person can only arrive at truth through experimenting how to understand according to the best of his ability the matter. This is Torah Lishmah, learning to understand the matter to understand the meaning of the text that one studies…But if at some point, one discovers that what one thought was a mistake, it does not mean that all the Torah one learned… were a waste of time. … One needed to test the possibilities…if one tries several interpretations and proved that they are not correct, at least you know where not to look. This too is understanding.  (freehand translation)</em></p>
+
+
+
+<p><em>“A major principle in understanding in learning and every quest for  truth. Everyone who loves truth needs to be prepared to work for many years…only to discover that everything one thought was not correct.”</em></p>
+
+<p><em>“God wants us to take responsibility. God gave us intelligence to understand what true responsibility is. Dogs and cats should be trained for obedience. But a human is not for obedience training. A person has values which are the source of his motivations. These establish his path in life.</em></p>
+
+<p><em>The Torah attempts to instill in us values before enumerating the commandments…To understand true values we need a common sense. Someone who thinks they are not required to evaluate anything with their own mind but think all correct action is the results of an explicit text is making a grave mistake. We do not need Torah for an explicit text.</em></p>
+
+<p><em>The principle of the Torah is to act with responsibility. To act with responsibility means to act according to the correct value of human responsibility to oneself, one’s surroundings, to one’s family, to one’s nation, and to the entire world. This is what God wants from us. Someone who thinks that one single factor of what one should do is what is written in a book falls into one of two types of ignorant thinking. If the book is a true book, then he does not understand what is written there, and if the book is not true, then he is doing nonsense.</em></p><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-11096" class="share-twitter sd-button share-icon" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-11096" class="share-facebook sd-button share-icon" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="index.html#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-9426707-11096-5eddce233eff1' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=9426707&amp;post_id=11096&amp;origin=kavvanah.wordpress.com&amp;obj_id=9426707-11096-5eddce233eff1&amp;domain=kavvanah.blog' data-name='like-post-frame-9426707-11096-5eddce233eff1'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>							</div><!-- .entry-content -->
+
+			<div class="entry-info">
+							This entry was posted in <a href="https://kavvanah.blog/category/uncategorized/" rel="category tag">Uncategorized</a>. Bookmark the <a href="index.html" title="Permalink to Rabbi Nahum Rabinovitch on Philosophy of&nbsp;Halakhah" rel="bookmark">permalink</a>.							</div><!-- .entry-info -->
+		</div><!-- #post-## -->
+
+		<div id="nav-below" class="navigation">
+			<div class="nav-previous"><a href="https://kavvanah.blog/2020/05/11/interview-with-tzvi-langermann-about-ibn-kammuna/" rel="prev"><span class="meta-nav">&larr;</span> Interview with Tzvi Langermann about Ibn&nbsp;Kammuna</a></div>
+			<div class="nav-next"></div>
+		</div><!-- #nav-below -->
+
+		
+<div id="comments">
+
+	
+			<p class="nocomments">Comments are closed.</p>
+		
+	
+	
+</div><!-- #comments -->
+	
+	</div><!-- #content -->
+</div><!-- #content-container -->
+
+
+		
+		<div id="primary" class="widget-area" role="complementary">
+					<ul class="xoxo">
+
+			<li id="text-4" class="widget-container widget_text"><h3 class="widget-title">Comments</h3>			<div class="textwidget"><p>The content of this blog does not reflect the views of the State Dept, CIS, or USIEF. Nor of Seton Hall University.</p>
+<p>This site's contents are © Alan Brill 2009-2020<br />
+You can contact me at Kavvanah at gmail.</p>
+<p> <a href="http://www.twitter.com/kavvanah"><img src="https://i1.wp.com/twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow kavvanah on Twitter" /></a></p>
+</div>
+		</li>		<li id="recent-posts-3" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+											<li>
+					<a href="index.html" aria-current="page">Rabbi Nahum Rabinovitch on Philosophy of&nbsp;Halakhah</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2020/05/11/interview-with-tzvi-langermann-about-ibn-kammuna/">Interview with Tzvi Langermann about Ibn&nbsp;Kammuna</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2020/05/10/blogging-again-book-sale/">Blogging Again &amp; Book&nbsp;Sale</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2020/03/01/rabbi-menachem-froman-on-accepting-our-selves-our-faces/">Rabbi Menachem Froman on Accepting our Selves- Our&nbsp;Faces</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/12/22/rav-shagar-on-shabbat-hanukkah-the-candle-and-the-sacrifice/">Rav Shagar on Shabbat Hanukkah- The Candle and the&nbsp;Sacrifice</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/12/19/interview-with-prof-ephraim-meir-faith-in-the-plural/">Interview with Prof. Ephraim Meir- Faith in the&nbsp;Plural</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/11/04/rabbi-yakov-nagen-interview-part-2-torah-study-zohar-and-interfaith/">Rabbi Yakov Nagen Interview part 2- Torah Study, Zohar, and&nbsp;Interfaith</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/11/02/rabbi-on-the-ganges-new-book/">Rabbi on the Ganges- New&nbsp;Book</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/10/24/aryeh-kaplan-on-evolution-a-missing-chapter-of-the-handbook-of-jewish-thought/">Aryeh Kaplan on Evolution- A Missing Chapter of The Handbook of Jewish&nbsp;Thought</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/10/23/miriam-feldmann-kaye-responds-to-the-responses/">Miriam Feldmann Kaye Responds to the&nbsp;Responses</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/09/25/claire-e-sufrin-responds-to-miriam-feldman-kaye/">Claire E. Sufrin responds to Miriam Feldman&nbsp;Kaye</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/09/23/zohar-atkins-responds-to-miriam-feldmann-kaye/">Zohar Atkins responds to Miriam&nbsp;Feldmann-Kaye</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/09/19/levi-morrow-response-to-miriam-feldmann-kayes-use-of-rav-shagar/">Levi Morrow- Response to Miriam Feldmann-Kaye’s use of Rav&nbsp;Shagar</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/09/16/interview-with-miriam-feldmann-kaye-jewish-theology-for-a-postmodern-age/">Interview with Miriam Feldmann Kaye – Jewish Theology for a Postmodern&nbsp;Age</a>
+									</li>
+											<li>
+					<a href="https://kavvanah.blog/2019/09/14/teaching-in-gadjah-mada-university-indonesia-or-how-i-spent-my-summer-vacation/">Teaching in Gadjah Mada University, Indonesia or How I spent my Summer&nbsp;Vacation</a>
+									</li>
+					</ul>
+		</li><li id="archives-4" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+				<li><a href='https://kavvanah.blog/2020/06/'>June 2020</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2020/05/'>May 2020</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2020/03/'>March 2020</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2019/12/'>December 2019</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2019/11/'>November 2019</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2019/10/'>October 2019</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2019/09/'>September 2019</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2019/07/'>July 2019</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2019/06/'>June 2019</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2019/04/'>April 2019</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2019/03/'>March 2019</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2019/01/'>January 2019</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2018/12/'>December 2018</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2018/10/'>October 2018</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2018/09/'>September 2018</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2018/08/'>August 2018</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2018/07/'>July 2018</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2018/06/'>June 2018</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2018/05/'>May 2018</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2018/04/'>April 2018</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2017/12/'>December 2017</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2017/11/'>November 2017</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2017/10/'>October 2017</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2017/09/'>September 2017</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2017/07/'>July 2017</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2017/06/'>June 2017</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2017/05/'>May 2017</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2017/04/'>April 2017</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2017/03/'>March 2017</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2017/02/'>February 2017</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2017/01/'>January 2017</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2016/12/'>December 2016</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2016/11/'>November 2016</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2016/10/'>October 2016</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2016/09/'>September 2016</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2016/08/'>August 2016</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2016/07/'>July 2016</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2016/06/'>June 2016</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2016/05/'>May 2016</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2016/03/'>March 2016</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2016/02/'>February 2016</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2016/01/'>January 2016</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2015/12/'>December 2015</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2015/11/'>November 2015</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2015/10/'>October 2015</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2015/09/'>September 2015</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2015/08/'>August 2015</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2015/07/'>July 2015</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2015/06/'>June 2015</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2015/05/'>May 2015</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2015/04/'>April 2015</a>&nbsp;(5)</li>
+	<li><a href='https://kavvanah.blog/2015/02/'>February 2015</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2015/01/'>January 2015</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2014/11/'>November 2014</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2014/10/'>October 2014</a>&nbsp;(9)</li>
+	<li><a href='https://kavvanah.blog/2014/09/'>September 2014</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2014/08/'>August 2014</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2014/07/'>July 2014</a>&nbsp;(6)</li>
+	<li><a href='https://kavvanah.blog/2014/05/'>May 2014</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2014/04/'>April 2014</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2014/03/'>March 2014</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2014/02/'>February 2014</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2014/01/'>January 2014</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2013/12/'>December 2013</a>&nbsp;(3)</li>
+	<li><a href='https://kavvanah.blog/2013/11/'>November 2013</a>&nbsp;(10)</li>
+	<li><a href='https://kavvanah.blog/2013/10/'>October 2013</a>&nbsp;(6)</li>
+	<li><a href='https://kavvanah.blog/2013/09/'>September 2013</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2013/08/'>August 2013</a>&nbsp;(11)</li>
+	<li><a href='https://kavvanah.blog/2013/07/'>July 2013</a>&nbsp;(9)</li>
+	<li><a href='https://kavvanah.blog/2013/06/'>June 2013</a>&nbsp;(5)</li>
+	<li><a href='https://kavvanah.blog/2013/04/'>April 2013</a>&nbsp;(1)</li>
+	<li><a href='https://kavvanah.blog/2013/03/'>March 2013</a>&nbsp;(4)</li>
+	<li><a href='https://kavvanah.blog/2013/02/'>February 2013</a>&nbsp;(5)</li>
+	<li><a href='https://kavvanah.blog/2013/01/'>January 2013</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2012/12/'>December 2012</a>&nbsp;(8)</li>
+	<li><a href='https://kavvanah.blog/2012/11/'>November 2012</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2012/10/'>October 2012</a>&nbsp;(8)</li>
+	<li><a href='https://kavvanah.blog/2012/09/'>September 2012</a>&nbsp;(5)</li>
+	<li><a href='https://kavvanah.blog/2012/08/'>August 2012</a>&nbsp;(13)</li>
+	<li><a href='https://kavvanah.blog/2012/07/'>July 2012</a>&nbsp;(2)</li>
+	<li><a href='https://kavvanah.blog/2012/06/'>June 2012</a>&nbsp;(15)</li>
+	<li><a href='https://kavvanah.blog/2012/05/'>May 2012</a>&nbsp;(11)</li>
+	<li><a href='https://kavvanah.blog/2012/04/'>April 2012</a>&nbsp;(13)</li>
+	<li><a href='https://kavvanah.blog/2012/03/'>March 2012</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2012/02/'>February 2012</a>&nbsp;(6)</li>
+	<li><a href='https://kavvanah.blog/2012/01/'>January 2012</a>&nbsp;(7)</li>
+	<li><a href='https://kavvanah.blog/2011/12/'>December 2011</a>&nbsp;(16)</li>
+	<li><a href='https://kavvanah.blog/2011/11/'>November 2011</a>&nbsp;(18)</li>
+	<li><a href='https://kavvanah.blog/2011/10/'>October 2011</a>&nbsp;(5)</li>
+	<li><a href='https://kavvanah.blog/2011/09/'>September 2011</a>&nbsp;(19)</li>
+	<li><a href='https://kavvanah.blog/2011/08/'>August 2011</a>&nbsp;(9)</li>
+	<li><a href='https://kavvanah.blog/2011/07/'>July 2011</a>&nbsp;(8)</li>
+	<li><a href='https://kavvanah.blog/2011/06/'>June 2011</a>&nbsp;(21)</li>
+	<li><a href='https://kavvanah.blog/2011/05/'>May 2011</a>&nbsp;(20)</li>
+	<li><a href='https://kavvanah.blog/2011/04/'>April 2011</a>&nbsp;(13)</li>
+	<li><a href='https://kavvanah.blog/2011/03/'>March 2011</a>&nbsp;(28)</li>
+	<li><a href='https://kavvanah.blog/2011/02/'>February 2011</a>&nbsp;(27)</li>
+	<li><a href='https://kavvanah.blog/2011/01/'>January 2011</a>&nbsp;(27)</li>
+	<li><a href='https://kavvanah.blog/2010/12/'>December 2010</a>&nbsp;(26)</li>
+	<li><a href='https://kavvanah.blog/2010/11/'>November 2010</a>&nbsp;(25)</li>
+	<li><a href='https://kavvanah.blog/2010/10/'>October 2010</a>&nbsp;(24)</li>
+	<li><a href='https://kavvanah.blog/2010/09/'>September 2010</a>&nbsp;(16)</li>
+	<li><a href='https://kavvanah.blog/2010/08/'>August 2010</a>&nbsp;(17)</li>
+	<li><a href='https://kavvanah.blog/2010/07/'>July 2010</a>&nbsp;(28)</li>
+	<li><a href='https://kavvanah.blog/2010/06/'>June 2010</a>&nbsp;(23)</li>
+	<li><a href='https://kavvanah.blog/2010/05/'>May 2010</a>&nbsp;(26)</li>
+	<li><a href='https://kavvanah.blog/2010/04/'>April 2010</a>&nbsp;(25)</li>
+	<li><a href='https://kavvanah.blog/2010/03/'>March 2010</a>&nbsp;(24)</li>
+	<li><a href='https://kavvanah.blog/2010/02/'>February 2010</a>&nbsp;(23)</li>
+	<li><a href='https://kavvanah.blog/2010/01/'>January 2010</a>&nbsp;(24)</li>
+	<li><a href='https://kavvanah.blog/2009/12/'>December 2009</a>&nbsp;(24)</li>
+	<li><a href='https://kavvanah.blog/2009/11/'>November 2009</a>&nbsp;(22)</li>
+	<li><a href='https://kavvanah.blog/2009/10/'>October 2009</a>&nbsp;(21)</li>
+	<li><a href='https://kavvanah.blog/2009/09/'>September 2009</a>&nbsp;(24)</li>
+		</ul>
+			</li><li id="search-2" class="widget-container widget_search"><h3 class="widget-title">Search Blog</h3><form role="search" method="get" id="searchform" class="searchform" action="https://kavvanah.blog/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></li><li id="blog_subscription-3" class="widget-container widget_blog_subscription jetpack_subscription_widget"><h3 class="widget-title"><label for="subscribe-field">Email Subscription</label></h3>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+						<div class="jetpack-subscribe-count">
+							<p>
+							Join 1,526 other followers							</p>
+						</div>
+											<p id="subscribe-email">
+						<input
+								type="text"
+								name="email"
+								
+								style="width: 95%; padding: 1px 10px"
+								placeholder="Enter your email address"
+								value=""
+								id=""
+							/>					</p>
+				
+				<p id="subscribe-submit">
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="9426707"/>
+                    <input type="hidden" name="source" value="https://kavvanah.blog/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="c123967b18" />                    <button type="submit"
+	                    		                	                >
+	                    Sign me up!                    </button>
+                </p>
+            </form>
+			
+</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+		
+			</div><!-- #content-box -->
+
+	<div id="footer" role="contentinfo">
+		
+		<div id="colophon">
+			<span class="generator-link"></span>
+					</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #container -->
+
+<!--  -->
+<script src='https://0.gravatar.com/js/gprofiles.js?ver=202024y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="index.html#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="9426707" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://kavvanah.blog" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="The Book of Doctrines and Opinions:" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="1dedf8fa02" /><input type="hidden" name="_wp_http_referer" value="/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/kavvanah.blog\/2020\/06\/07\/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah\/":11096};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2020/06/07/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="index.html#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&amp;cssminify=yes' type='text/css' media='all' />
+<script>
+var actionbardata = {"siteID":"9426707","siteName":"The Book of Doctrines and Opinions:","siteURL":"https:\/\/kavvanah.blog","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/c9f111237f93750b6b994fc5185d49c3?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/coraline","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fkavvanah.blog%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F&signup_flow=account&domain=kavvanah.blog","themeURL":"","xhrURL":"https:\/\/kavvanah.blog\/wp-admin\/admin-ajax.php","nonce":"7d690084a2","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"c123967b18\" \/>","referer":"https:\/\/kavvanah.blog\/2020\/06\/07\/rabbi-nahum-rabinovitch-on-philosophy-of-halakhah\/","canFollow":"1","feedID":"106537014","statusMessage":"","customizeLink":"https:\/\/kavvanah.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fkavvanah.wordpress.com%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F","postID":"11096","shortlink":"https:\/\/wp.me\/pDyjF-2SY","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/kavvanah.blog\/11096","statsLink":"https:\/\/wordpress.com\/stats\/post\/11096\/kavvanah.blog","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Coraline","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,526 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fkavvanah.blog%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F&signup_flow=account&domain=kavvanah.blog\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/kavvanah.blog\/wp-admin\/admin-ajax.php","nonce":"8c9336e39c","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/kavvanah.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fkavvanah.blog%2F2020%2F06%2F07%2Frabbi-nahum-rabinovitch-on-philosophy-of-halakhah%2F","blog_id":"9426707","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=9426707&v=wpcom&tz=-5&user_id=0&subd=kavvanah","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUdFqwzAM/KG5JrBB+jD6LZqjpXJt2ZPsdNvX14GltDSk7EnidHcSJ3vOxiUuyMV6tQNO5DB/77y+2PtRTloiqsKIK1P/VVF+/sqOeCI8P6V5LBncyQgq/T64xmpyqCOx2kAnVNtEFY/AQ0DZIMMQic0HiI2gBaV1Jk0oQkMzuWL/dCjSLtUtkSuUeBZdu4VN7EKdl7cENBOv4ffJ3LJWdjmQVBWDXRJcgA3N/D/zGYDE6hGEeFxqEx3ie/fW7/v+te86fwG/kMhZ'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="https://stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'9426707','blog_tz':'-5','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'9426707','v':'wpcom','tz':'-5','user_id':'0','post':'11096','subd':'kavvanah'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1oMUpKVjdLUHY1WldoajE/MT9jW0s5Wk03ZlM/UDFNbyYzRHRYfG9GdFdfLnd3TFBJUXJCLW0mM1YvQTlMam9ZYS4xSzBrSlNFP1p2U1c1YlR6QXw0bHR6QkUsbDdSejJMclp1JjF8LWJsMi1MWEE1Ll83OXVBNnYtT1hfcVd0dF03U2ZTZ2FEU1glUzYmJnl5Q1c0aGpjc0F3XV8xU2V6Mm4vSl1mJi02djV6aG4vZWpYYnlyMT9iZGtJbmN2VkxDMGwwRFZVLC9nYTV3SCxEc1Nham5Yck4lLVRaVEFkYV1mWHdVa2tuSX4zLytddFlDOTNCZmVPUFFZdD1obFRNN0diYlEuQz9FK0MwNi5md3E2VGU0bz95d35oekdYVQ=='}]);
+_stq.push([ 'clickTrackerInit', '9426707', '11096' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>
